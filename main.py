@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body, File, UploadFile
 import base64
+import cv2
 
 app = FastAPI()
 
@@ -30,6 +31,7 @@ def upload_bashCode(text:str=Body(...)):
     with open("templates/image.jpg","wb") as file:
         file.write(base64.b64decode((text)))
 
+    image = cv2.imread('templates/image.jpg')
+    
 
-    return "All Set!"
-
+    return {"Shape":image.shape}
