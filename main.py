@@ -104,6 +104,6 @@ def upload_facecode(user_number,survey,text: str=Body(...)):
 
         # Connect to Database
         db = firebase.database()
-        db.child(f"Data201/{user_number}/{survey}/ImageData").push(str(face_enc[0]),token)
+        db.child(f"Data/{user_number}/{survey}/ImageData").push(str(face_enc[0]),token)
 
         return "1"
