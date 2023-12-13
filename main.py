@@ -157,8 +157,40 @@ def upload_facecode(user_number,survey,file_name,text: str=Body(...)):
 
 
 
-@app.post("/matchface/{user_number}/{survey}/{file_name}")
-def match_faces(user_number,survey,file_name,text: str=Body(...)):
+# @app.post("/matchface/{user_number}/{survey}/{file_name}")
+# def match_faces(user_number,survey,file_name,text: str=Body(...)):
+
+#     data = db.child(f"Data/{user_number}/{survey}/ImageData/").get()
+#     keys_list = list(data.val().keys())
+#     try:
+#         keys_list.remove(file_name)
+#     except:
+#         pass
+
+#     all_faces = list()
+#     for keys in keys_list:
+#         data = db.child(f"Data/{user_number}/{survey}/ImageData/{keys}").get().val()
+
+#         modified_string = re.sub(r'\s+', ',', data)
+#         output_list = np.array(ast.literal_eval(modified_string))
+
+#         all_faces.append(output_list)
+
+#     new_face = db.child(f"Data/{user_number}/{survey}/ImageData/{file_name}/").get().val()
+#     modified_string = re.sub(r'\s+', ',', new_face)
+#     new_face = np.array(ast.literal_eval(modified_string))
+
+#     match = face_recognition.compare_faces(all_faces,new_face)
+#     count = sum(bool(x) for x in match)
+
+#     if count == 0:
+#         return 0
+#     else:
+#         return 1
+
+
+@app.get("/matchface/{user_number}/{survey}/{file_name}")
+def match_faces(user_number,survey,file_name):
 
     data = db.child(f"Data/{user_number}/{survey}/ImageData/").get()
     keys_list = list(data.val().keys())
