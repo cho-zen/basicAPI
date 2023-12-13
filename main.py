@@ -168,9 +168,7 @@ def match_faces(user_number,survey,file_name,text: str=Body(...)):
         pass
 
     all_faces = list()
-    
     for keys in keys_list:
-
         data = db.child(f"Data/{user_number}/{survey}/ImageData/{keys}").get().val()
 
         modified_string = re.sub(r'\s+', ',', data)
@@ -178,12 +176,11 @@ def match_faces(user_number,survey,file_name,text: str=Body(...)):
 
         all_faces.append(output_list)
 
-    new_face = text
+    new_face = db.child(f"Data/{user_number}/{survey}/ImageData/{file_name}/").get().val()
     modified_string = re.sub(r'\s+', ',', new_face)
     new_face = np.array(ast.literal_eval(modified_string))
 
     match = face_recognition.compare_faces(all_faces,new_face)
-
     count = sum(bool(x) for x in match)
 
     if count == 0:
