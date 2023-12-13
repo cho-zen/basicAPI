@@ -5,6 +5,8 @@ import cv2
 import face_recognition
 import pyrebase
 import re
+import ast
+import numpy as np
 
 firebase_config = {
     "apiKey": "AIzaSyCUagURc1l3froPMMFLnUHgIs9eOODB9XI",
