@@ -5,6 +5,31 @@ import cv2
 import face_recognition
 import pyrebase
 
+firebase_config = {
+    "apiKey": "AIzaSyCUagURc1l3froPMMFLnUHgIs9eOODB9XI",
+    "authDomain": "survey-application-c9806.firebaseapp.com",
+    "databaseURL": "https://survey-application-c9806-default-rtdb.firebaseio.com",
+    "projectId": "survey-application-c9806",
+    "storageBucket": "survey-application-c9806.appspot.com",
+    "messagingSenderId": "112280167703",
+    "appId": "1:112280167703:web:aadeff65cb8141f52d0352"
+}
+
+firebase = pyrebase.initialize_app(firebase_config)
+
+# Get the auth object
+auth = firebase.auth()
+
+# Get the current user
+user = auth.current_user
+
+# Get the user's token
+token = user
+
+# Connect to Database
+db = firebase.database()
+
+
 app = FastAPI()
 
 
@@ -122,30 +147,7 @@ def upload_facecode(user_number,survey,file_name,text: str=Body(...)):
         return 0
     else:
         face_enc = face_recognition.face_encodings(img)
-
-        firebase_config = {
-        "apiKey": "AIzaSyCUagURc1l3froPMMFLnUHgIs9eOODB9XI",
-        "authDomain": "survey-application-c9806.firebaseapp.com",
-        "databaseURL": "https://survey-application-c9806-default-rtdb.firebaseio.com",
-        "projectId": "survey-application-c9806",
-        "storageBucket": "survey-application-c9806.appspot.com",
-        "messagingSenderId": "112280167703",
-        "appId": "1:112280167703:web:aadeff65cb8141f52d0352"
-        }
-
-        firebase = pyrebase.initialize_app(firebase_config)
-
-            # Get the auth object
-        auth = firebase.auth()
-
-        # Get the current user
-        user = auth.current_user
-
-        # Get the user's token
-        token = user
-
-        # Connect to Database
-        db = firebase.database()
+        
         db.child(f"Data/{user_number}/{survey}/ImageData/{file_name}").set(str(face_enc[0]),token)
 
         return str(face_enc[0])
