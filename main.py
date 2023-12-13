@@ -143,6 +143,7 @@ def upload_facecode(user_number,survey,file_name,text: str=Body(...)):
         file.write(base64.b64decode((text)))
 
     img = cv2.imread('templates/image.jpg')
+    img = cv2.rotate(img,cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     face_loc = face_recognition.face_locations(img)
     
@@ -150,7 +151,7 @@ def upload_facecode(user_number,survey,file_name,text: str=Body(...)):
         return 0
     else:
         face_enc = face_recognition.face_encodings(img)
-        
+
         db.child(f"Data/{user_number}/{survey}/ImageData/{file_name}").set(str(face_enc[0]),token)
 
         return str(face_enc[0])
