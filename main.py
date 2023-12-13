@@ -4,6 +4,7 @@ import base64
 import cv2
 import face_recognition
 import pyrebase
+import re
 
 firebase_config = {
     "apiKey": "AIzaSyCUagURc1l3froPMMFLnUHgIs9eOODB9XI",
